@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IGNATIUSGRAM - EDIT PROFILE</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f4f4f4;
+        }
+
+        .login-container {
+            margin-top: 50px;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .logo-container {
+            text-align: center;
+        }
+
+        .logo {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .card-title {
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+        }
+
+        .btn-signup {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-signup:hover {
+            background-color: #0056b3;
+        }
+
+        .footer {
+            position: relative;
+            top: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container login-container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card d-flex align-items-center">
+                    <div class="logo-container">
+                        <img src="https://belajar-online.ignatiusglobal.sch.id/pluginfile.php/1/core_admin/logo/0x200/1628479610/igs-logos.png"
+                            alt="IGNATIUSGRAM Logo" class="logo">
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body p-5">
+                        <h2 class="card-title text-center">EDIT PROFILE FORM</h2>
+
+                        <form method="POST" action="">
+                            {{ form.hidden_tag() }}
+
+                            <div class="form-group">
+                                <label for="username" class="form-label">Username</label>
+                                {{ form.username(class="form-control") }}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fullname" class="form-label">Full Name</label>
+                                {{ form.fullname(class="form-control") }}
+                            </div>
+
+
+
+                            <button type="submit" class="btn btn-signup btn-block btn-lg">Edit Profile</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+<footer class="footer">
+    <div>
+        <p>© 2023 IGNATIUSGRAM from Ignatius Global School</p>
+    </div>
+</footer>
+</html>

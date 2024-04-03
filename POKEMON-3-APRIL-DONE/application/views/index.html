@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        /* Reset CSS */
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        .content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .img {
+            width:400px ; 
+            height: 500px;
+            border-radius: 20px; 
+            background-color: blanchedalmond; 
+        }
+
+        .detail {
+            margin-top: 20px; 
+            text-align: center; 
+        }
+
+        .stats {
+            align-items: center;
+        }
+
+        .stats > div {
+            margin: 0 10px 0 10px;
+            text-align: center; 
+        }
+
+        .randomize-btn {
+            font-size: 24px;
+            cursor: pointer;
+            position: fixed;
+            bottom: 20px;
+            left: 45%;
+            transform: translateX(-50%);
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .add-btn {
+            font-size: 24px;
+            cursor: pointer;
+            position: fixed;
+            bottom: 20px;
+            left: 64%;
+            transform: translateX(-50%);
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .randomize-btn:hover {
+            background-color: #0056b3;
+        }
+        .add-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <header>
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('profile') }}">profile</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('logout') }}">logout</a>
+                </li>
+                <li class="nav-item">
+                </li>
+              </ul>
+        </header>
+        <div class="content">
+            <div class="name"></div>
+            <img src="" alt="" class="img">
+            <div class="detail">
+                <div class="name">Name: <span id="pokemonName"></span></div>
+                <div class="type">Type: <span id="pokemonType"></span></div>
+                <div class="ability">Ability: <span id="pokemonAbility"></span></div>
+                <div class="stats">
+                    <div>HP: <span id="pokemonHP"></span></div>
+                    <div>Attack: <span id="pokemonAttack"></span></div>
+                    <div>Defense: <span id="pokemonDefense"></span></div>
+                    <div>Special Defense: <span id="pokemonSpDefense"></span></div>
+                    <div>Special Attack: <span id="pokemonSpAttack"></span></div>
+                    <div>Speed: <span id="pokemonSpeed"></span></div>
+                </div>
+                <div class="desc">Description: <span id="pokemonDescription"></span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-row justify-content-center p-2">
+        <button class="randomize-btn" id="randomizeBtn">Randomize Pokémon</button>
+        <button class="add-btn" id="addBtn">Add Pokémon</button>
+    </div>
+    
+    <!-- <div class="pokemon-card">
+        <p></p>
+        <form method="POST" action="">
+            <button type="submit">Add to Favorites</button>
+        </form>
+    </div> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+        // Ketika tombol "Randomize Pokémon" diklik, panggil fungsi fetchRandomPokemon()
+        document.getElementById("randomizeBtn").addEventListener('click', fetchRandomPokemon);
+    
+        // Ketika tombol "Add to Favorites" diklik, panggil fungsi addToFavorites()
+        document.getElementById("addBtn").addEventListener('click', addToFavorites);
+    
+        // Fungsi untuk mengambil dan menampilkan data Pokémon secara acak
+        async function fetchRandomPokemon() {
+            try {
+                // Generate random ID between 1 and 898 (total number of Pokémon in the PokeAPI)
+                const randomId = Math.floor(Math.random() * 898) + 1;
+                
+                // Fetch Pokémon data from PokeAPI
+                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
+                const pokemonData = await response.json();
+    
+                console.log("Pokémon data:", pokemonData); // Log Pokémon data
+    
+                // Update HTML elements with fetched Pokémon data
+                document.getElementById("pokemonName").textContent = pokemonData.name;
+                document.getElementById("pokemonType").textContent = pokemonData.types[0].type.name; // Assuming the first type is primary
+                document.getElementById("pokemonAbility").textContent = pokemonData.abilities[0].ability.name; // Assuming the first ability is primary
+                document.getElementById("pokemonHP").textContent = pokemonData.stats[0].base_stat;
+                document.getElementById("pokemonAttack").textContent = pokemonData.stats[1].base_stat;
+                document.getElementById("pokemonDefense").textContent = pokemonData.stats[2].base_stat;
+                document.getElementById("pokemonSpDefense").textContent = pokemonData.stats[3].base_stat;
+                document.getElementById("pokemonSpAttack").textContent = pokemonData.stats[4].base_stat;
+                document.getElementById("pokemonSpeed").textContent = pokemonData.stats[5].base_stat;
+    
+                // Fetch and update image
+                const imageResponse = await fetch(pokemonData.sprites.front_default);
+                const imageData = await imageResponse.blob();
+                const imageUrl = URL.createObjectURL(imageData);
+                document.querySelector('.img').src = imageUrl;
+    
+                // Fetch and update description
+                const speciesResponse = await fetch(pokemonData.species.url);
+                const speciesData = await speciesResponse.json();
+                const flavorTextEntries = speciesData.flavor_text_entries.filter(entry => entry.language.name === 'en'); // Get English description
+                const description = flavorTextEntries[0].flavor_text.replace(/(\r\n|\n|\r)/gm, " "); // Clean up text
+                document.getElementById("pokemonDescription").textContent = description;
+    
+                // Set global variable for the random ID
+                window.randomId = randomId;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    
+        // Fungsi untuk menambahkan ID Pokémon ke dalam tabel SQLite
+        async function addToFavorites() {
+            try {
+                // Kirim data ID Pokémon ke server
+                const response = await fetch('/add_favorite_pokemon', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        pokemon_id: window.randomId // Menggunakan ID yang diambil dari fetchRandomPokemon()
+                    })
+                });
+    
+                const data = await response.json();
+                console.log("Response:", data); // Log response from server
+    
+                if (data.success) {
+                    alert('Pokémon berhasil ditambahkan ke favorit!');
+                } else {
+                    alert('Gagal menambahkan Pokémon ke favorit.');
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    
+        // Panggil fetchRandomPokemon() saat halaman dimuat untuk pertama kalinya
+        fetchRandomPokemon();
+    </script>
+    
+    
+</body>
+</html>
